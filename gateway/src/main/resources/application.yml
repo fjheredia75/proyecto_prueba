@@ -1,0 +1,41 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway-ms
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: 'true'
+      routes:
+        - id: categorys-ms
+          uri: lb://CATEGORYS-MS
+          predicates:
+            - Path=/categorys/**
+
+        - id: customers-ms
+          uri: lb://CUSTOMERS-MS
+          predicates:
+            - Path=/customers/**
+
+        - id: oportunitys-ms
+          uri: lb://OPORTUNITYS-MS
+          predicates:
+            - Path=/oportunitys/**
+
+        - id: activities-ms
+          uri: lb://ACTIVITIES-MS
+          predicates:
+            - Path=/activities/**
+
+    loadbalancer:
+      ribbon:
+        enabled: 'false'
+eureka:
+  client:
+    service-url:
+     defaultZone: http://localhost:8761/eureka
+
+  instance:
+    instance-id="${spring.application.name}:${server.port}"

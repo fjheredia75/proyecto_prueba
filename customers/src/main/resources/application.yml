@@ -1,0 +1,37 @@
+server:
+  port: 0
+  error:
+    include-message: always
+
+#Configuracion de spring
+spring:
+  application:
+    name: customers-ms
+  #Configuracion de migracion
+  flyway:
+    enabled: true
+    baselineVersion: 1
+    locations:
+      classpath: db/migration
+    sqlMigrationSuffixes: .sql
+    baselineOnMigrate: true
+    sqlMigrationPrefix: V
+    schemas: public
+  #Conexion a la base de datos
+  datasource:
+    url: jdbc:postgresql://queenie.db.elephantsql.com:5432/omjesveu?socketTimeout=3
+    username: omjesveu
+    password: 8-JvyeLGHypSdAn7pikclT_bSV97KY_M
+    driverClassName: org.postgresql.Driver
+
+#Conexion para registro de esta API en eureka
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+
+# Las siguientes 3 lineas opcional cuando se deba especificar la ruta de Eureka
+# En caso de que todos los microservicios corra en localhost no es necesario
+
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
